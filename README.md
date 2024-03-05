@@ -182,6 +182,8 @@ cd ~
 wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O opensuse.iso
 ```
 
+![image-20240305174907428](.markdown_images/`README`/image-20240305174907428.png)
+
 **Creamos las carpetas para alojar la iso**
 
 ```bash
@@ -201,11 +203,30 @@ cp -rfv /var/www/html/opensuse/boot/x86_64/loader/linux /tftp/boot/opensuse/load
 cp -rfv /var/www/html/opensuse/boot/x86_64/loader/initrd /tftp/boot/opensuse/loader
 ```
 
+**Creamos el fichero default**
+
+`nano /tftp/bios/pxelinux.cfg/default`
+
 ```cfg
+...
+...
+...
+
 LABEL OpenSUSE
         kernel /boot/opensuse/loader/linux
-        append nfsroot=$IP:/var/www/html/opensuse netboot=nfs ip=dhcp boot=loader initrd=/boot/opensuse/loader/initrd splash=silent ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
+        append nfsroot=192.168.1.1:/var/www/html/opensuse netboot=nfs ip=dhcp boot=loader initrd=/boot/opensuse/loader/initrd splash=silent ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
 ```
 
+**Reiniciamos los servicios**
 
+```bash
+systemctl restart dnsmasq
+systemctl restart nfs-kernel-server
+```
+
+#### Probamos si funciona
+
+```
+vagrant up client
+```
 

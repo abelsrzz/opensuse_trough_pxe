@@ -18,16 +18,16 @@ Vagrant.configure("2") do |config|
       end
       
       #Creamos la máquina cliente
-      config.vm.define "client", autostart: false do |cli|
+      config.vm.define "clientpxe", autostart: false do |cli|
         cli.vm.box = "TimGesekus/pxe-boot"
-        cli.vm.hostname = "client"
+        cli.vm.hostname = "clientpxe"
         cli.ssh.connect_timeout = 1
         #Indicamos que obtendrá dirección IP por dhcp
         cli.vm.network "private_network", type: "dhcp",
         :adapter => 1, virtualbox__intnet: "PXElan"
     
         cli.vm.provider :virtualbox do |vb|
-          vb.name = "client"
+          vb.name = "clientpxe"
           vb.gui = true
         end 
       end
