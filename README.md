@@ -1,5 +1,4 @@
-# EN DESARROLLO
-# Instalación PXE
+# Instalación PXE de Open SUSE 15.5
 
 Este proyecto consiste enla instalación de un servidor PXE para instalar un sistema operativo <a href="https://get.opensuse.org/leap/15.5/#download">Open SUSE Leap 15.5</a>.
 
