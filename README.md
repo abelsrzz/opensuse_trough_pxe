@@ -238,3 +238,6 @@ systemctl restart nfs-kernel-server
 vagrant up client
 ```
 
+### Instalación automática
+
+El archivo `automated.sh` hace todo el proceso de preparación del servidor PXE de forma automática.
