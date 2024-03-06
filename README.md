@@ -209,13 +209,21 @@ cp -rfv /var/www/html/opensuse/boot/x86_64/loader/initrd /tftp/boot/opensuse/loa
 `nano /tftp/bios/pxelinux.cfg/default`
 
 ```cfg
-...
-...
-...
+DEFAULT menu.c32
+MENU TITLE PANEL PXE - ABELSRZ
+PROMPT 0 
+TIMEOUT 0
+
+MENU COLOR TABMSG   37;40   #ffffffff #00000000
+MENU COLOR TITLE    1;36;40 #ffffffff #00000000 
+MENU COLOR SEL      30;46   #ffffffff #00000000
+MENU COLOR UNSEL    40;37   #ffffffff #00000000
+MENU COLOR BORDER   37;40   #ffffffff #00000000
+
 
 LABEL OpenSUSE
         kernel /boot/opensuse/loader/linux
-        append nfsroot=192.168.1.1:/var/www/html/opensuse netboot=nfs ip=dhcp boot=loader initrd=/boot/opensuse/loader/initrd splash=silent ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
+        append initrd=/boot/opensuse/loader/initrd splash=silent ip=dhcp install=nfs://192.168.1.10:/var/www/html/opensuse boot=loader ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
 ```
 
 **Reiniciamos los servicios**

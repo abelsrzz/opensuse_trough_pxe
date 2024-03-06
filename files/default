@@ -8,3 +8,8 @@ MENU COLOR TITLE    1;36;40 #ffffffff #00000000
 MENU COLOR SEL      30;46   #ffffffff #00000000
 MENU COLOR UNSEL    40;37   #ffffffff #00000000
 MENU COLOR BORDER   37;40   #ffffffff #00000000
+
+
+LABEL OpenSUSE
+        kernel /boot/opensuse/loader/linux
+        append initrd=/boot/opensuse/loader/initrd splash=silent ip=dhcp install=nfs://192.168.1.10:/var/www/html/opensuse boot=loader ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
