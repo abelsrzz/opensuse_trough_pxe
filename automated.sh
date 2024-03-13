@@ -50,9 +50,10 @@ mkdir -p /var/www/html/opensuse
 if [ -f "/vagrant/opensuse.iso" ]; then
     mount /vagrant/opensuse.iso /mnt
 else
-    wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O opensuse.iso
-    mount opensuse.iso /mnt
+    wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O /vagrant/opensuse.iso
 fi
+
+mount /vagrant/opensuse.iso /mnt
 
 cp -rfv /mnt/* /var/www/html/opensuse
 cp -rfv /mnt/.disk /var/www/html/opensuse
