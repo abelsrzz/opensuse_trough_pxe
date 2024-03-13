@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
         subconfig.vm.network :private_network, ip: "192.168.1.10",
         virtualbox__intnet: "PXElan"
         
+        subconfig.vm.provision "shell", path: "automated.sh"
+
         subconfig.vm.provider :virtualbox do |vb|
           vb.name = "serverPXE"
           vb.gui = false
