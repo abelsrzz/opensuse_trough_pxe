@@ -77,12 +77,12 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-## Pasos a seguir
+## Pasos a seguir para preparar el servidor de forma manual
 
  #### Levantamos las máquinas
 
 ```bash
-vagrant up serverPXE router
+vagrant up
 ```
 
 ![image-20240305173656194](.markdown_images/`README`/image-20240305173656194-17096566488531.png)
@@ -146,7 +146,6 @@ mkdir -p /tftp/{bios,boot,grub}
 
 ```bash
 cp -v /vagrant/files/exports /etc/exports
-systemctl restart nfs-kernel-server
 
 cp -v /vagrant/files/dnsmasq.conf /etc/dnsmasq.conf
 
@@ -164,12 +163,9 @@ cp -v /boot/grub/{grub.cfg,unicode.pf2} /tftp/grub/
 
 sudo ln -s /tftp/boot  /tftp/bios/boot
 
-
 mkdir /tftp/bios/pxelinux.cfg
 cp -v /vagrant/files/default /tftp/bios/pxelinux.cfg/default
 
-cp /vagrant/files/dnsmasq.conf /etc/dnsmasq.conf
-systemctl restart dnsmasq
 ```
 
 #### **Preparamos la imagen iso para la instalación**
@@ -179,7 +175,7 @@ systemctl restart dnsmasq
 ```bash
 cd ~
 
-wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O opensuse.iso
+wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O /vagrant/opensuse.iso
 ```
 
 ![image-20240305174907428](.markdown_images/`README`/image-20240305174907428.png)
@@ -189,10 +185,9 @@ wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5
 ```bash
 mkdir -p /var/www/html/opensuse
 
-mount opensuse.iso /mnt
+mount /vagrant/opensuse.iso /mnt
 
 cp -rfv /mnt/* /var/www/html/opensuse
-cp -rfv /mnt/.disk /var/www/html/opensuse
 
 umount /mnt
 
@@ -235,7 +230,7 @@ systemctl restart nfs-kernel-server
 #### Probamos si funciona
 
 ```
-vagrant up client
+vagrant up pxeclient
 ```
 
 ### Instalación automática

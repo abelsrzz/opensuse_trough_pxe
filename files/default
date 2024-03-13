@@ -11,5 +11,6 @@ MENU COLOR BORDER   37;40   #ffffffff #00000000
 
 
 LABEL OpenSUSE
-        kernel /boot/opensuse/loader/linux
-        append initrd=/boot/opensuse/loader/initrd splash=silent ip=dhcp install=nfs://192.168.1.10:/var/www/html/opensuse boot=loader ramdisk_size=512000 ramdisk_blocksize=4096 language=es_ES keytable=es quiet quiet showopts
+        linux boot/opensuse/linux
+        initrd boot/opensuse/initrd
+        append install=nfs://192.168.1.10/mnt/ language=es_ES keytable=es showopts
