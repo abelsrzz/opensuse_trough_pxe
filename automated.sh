@@ -2,20 +2,18 @@
 
 cd ~
 
-apt update && apt install -y nfs-kernel-server dnsmasq unzip
+apt update && apt install -y apache2 nfs-kernel-server dnsmasq unzip
 
-mkdir syslinux tmp && cd syslinux
+mkdir syslinux && cd syslinux
 
 wget https://mirrors.edge.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.zip
 
 unzip syslinux*
 
-cd ../tmp
+cd /tmp
 apt-get download shim.signed grub-efi-amd64-signed
 dpkg -x grub* ~/grub
 dpkg -x shim-signed_1* ~/shim
-
-rm -rf ~/tmp/*
 
 mkdir -p /tftp/{bios,boot,grub}
 
@@ -36,31 +34,36 @@ cp -v shim/usr/lib/shim/shimx64.efi.signed  /tftp/grub/bootx64.efi
 cp -v /boot/grub/{grub.cfg,unicode.pf2} /tftp/grub/
 
 
-sudo ln -s /tftp/boot /tftp/bios/boot
+sudo ln -s /tftp/boot  /tftp/bios/boot
 
 
 mkdir /tftp/bios/pxelinux.cfg
 cp -v /vagrant/files/default /tftp/bios/pxelinux.cfg/default
 
+cp /vagrant/files/dnsmasq.conf /etc/dnsmasq.conf
+systemctl restart dnsmasq
 
 cd ~
 
+mkdir -p /var/www/html/opensuse
 
 if [ -f "/vagrant/opensuse.iso" ]; then
     mount /vagrant/opensuse.iso /mnt
 else
-    wget https://ftp.rnl.tecnico.ulisboa.pt/pub/opensuse/distribution/leap/15.5/iso/openSUSE-Leap-15.5-NET-x86_64-Build491.1-Media.iso -O /vagrant/opensuse.iso
+    wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso -O opensuse.iso
+    mount opensuse.iso /mnt
 fi
 
-mount /vagrant/opensuse.iso /mnt
+cp -rfv /mnt/* /var/www/html/opensuse
+cp -rfv /mnt/.disk /var/www/html/opensuse
+
+umount /mnt
 
 mkdir -p /tftp/boot/opensuse/loader
 
-cp -rfv /mnt/boot/x86_64/loader/linux /tftp/boot/opensuse/
+cp -rfv /var/www/html/opensuse/boot/x86_64/loader/linux /tftp/boot/opensuse/loader
 
-cp -rfv /mnt/boot/x86_64/loader/initrd /tftp/boot/opensuse/
-
-chmod 755 -R /tftp
+cp -rfv /var/www/html/opensuse/boot/x86_64/loader/initrd /tftp/boot/opensuse/loader
 
 systemctl restart dnsmasq
 systemctl restart nfs-kernel-server

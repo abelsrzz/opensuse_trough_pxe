@@ -2,6 +2,10 @@
 
 Este proyecto consiste enla instalación de un servidor PXE para instalar un sistema operativo <a href="https://get.opensuse.org/leap/15.5/#download">Open SUSE Leap 15.5</a>.
 
+**Ver vídeo YouTube:**
+
+[![YouTube Video](https://img.youtube.com/vi/eVLAzz35r38/0.jpg)](https://youtu.be/eVLAzz35r38)
+
 En mi caso he decidido hacerlo con Vagrant para facilitar el proceso de crear las máquinas virtuales con las características necesarias.
 
 Máquinas que utilizaremos:
